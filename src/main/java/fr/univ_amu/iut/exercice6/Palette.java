@@ -1,6 +1,12 @@
 package fr.univ_amu.iut.exercice6;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -60,6 +66,43 @@ public class Palette extends Application {
     // 6. Attention au format du texte du label : les tests vérifient la
     //    présence exacte des substrings "Rouge: 2", "Vert: 0", "Bleu: 1"
     //    après une séquence de clics.
+    Pane zone = new Pane();
+    zone.setId("zone");
+    zone.setMinSize(300, 200);
+    Label label = new Label("Rouge: 0 Vert: 0 Bleu: 0");
+    label.setId("compteurs");
+    Button rouge = new Button("Rouge");
+    int[] nbClics = {0, 0, 0}; // pris sur l'explication du tp2
+    rouge.setId("btn-rouge");
+    rouge.setOnAction(
+        e -> {
+          nbClics[0]++;
+          zone.setStyle("-fx-background-color: red;");
+          label.setText("Rouge: " + nbClics[0] + " Vert: " + nbClics[2] + " Bleu: " + nbClics[1]);
+        });
+    Button bleu = new Button("Bleu");
+    bleu.setId("btn-bleu");
+    bleu.setOnAction(
+        e -> {
+          nbClics[1]++;
+          zone.setStyle("-fx-background-color: blue;");
+          label.setText("Rouge: " + nbClics[0] + " Vert: " + nbClics[2] + " Bleu: " + nbClics[1]);
+        });
+    Button vert = new Button("Vert");
+    vert.setId("btn-vert");
+    vert.setOnAction(
+        e -> {
+          nbClics[2]++;
+          zone.setStyle("-fx-background-color: green;");
+          label.setText("Rouge: " + nbClics[0] + " Vert: " + nbClics[2] + " Bleu: " + nbClics[1]);
+        });
+    HBox hbox = new HBox(rouge, bleu, vert);
+    BorderPane borderpane = new BorderPane(zone);
+    borderpane.setTop(hbox);
+    borderpane.setBottom(label);
+    Scene scene = new Scene(borderpane);
+    primaryStage.setScene(scene);
+    primaryStage.show();
   }
 
   public static void main(String[] args) {
